@@ -1,0 +1,95 @@
+---
+title: quincunx | PGS Scores
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+params:
+  pgs: !r NULL
+---
+
+Row
+-------------------------------------
+    
+###
+    
+```{r}
+colDef <- reactable::colDef
+colFormat <- reactable::colFormat
+
+cols_to_keep <- c('pgs_id',
+                  'pgs_name',
+                  'n_variants',
+                  'reported_trait',
+                  'trait',
+                  'publication')
+
+traits <- collapse_traits(params$pgs@traits)
+
+tbl <-
+  dplyr::left_join(params$pgs@scores[c('pgs_id', 'pgs_name', 'reported_trait', 'n_variants')],
+                   traits[c('pgs_id', 'efo_id', 'trait')], by = 'pgs_id') %>%
+  dplyr::left_join(params$pgs@publications, by = 'pgs_id') %>%
+  dplyr::mutate(publication = glue::glue('{author_fullname} et al. ({lubridate::year(publication_date)})'))
+
+tbl_show <- dplyr::select(tbl, cols_to_keep)
+
+columns = list(
+  .rownames = colDef(
+    maxWidth = 50
+  ),
+    pgs_id = colDef(
+      name = "PGS Id",
+      maxWidth = 100
+    ),
+  publication = colDef(
+    name = 'Publication',
+    cell = function(value, index) {
+      # Render as a link
+      url <-
+        sprintf('https://doi.org/%s', tbl[index, 'doi'])
+      htmltools::tags$a(href = url, target = "_blank", as.character(value))
+    }
+  ),
+    pgs_name = colDef(
+      name = "PGS Name",
+      maxWidth = 150,
+    ),
+    reported_trait = colDef(
+      name = "Reported Trait"
+    ),
+    n_variants = colDef(
+      name = "Variants",
+      maxWidth = 100,
+      format = colFormat(separators = TRUE),
+      style = function(value) {
+        bar_style(width = hapiviz:::michaelis(value, 0.001*max(tbl$n_variants)), height = "90%", align = "right")
+      }
+    ),
+    trait = colDef(
+      html = TRUE,
+      name = 'Mapped EFO Trait',
+      cell = function(value, index) {
+        # Render as a link
+        href <- sprintf('https://www.pgscatalog.org/trait/%s', hapiviz:::extract_efo_ids(value))
+        value <- hapiviz:::split_traits(value)
+        paste(hapiviz:::html_link(href = href, content = value), collapse = ' ')
+      }
+    )
+  )
+
+
+reactable::reactable(
+  tbl_show,
+  searchable = TRUE,
+  filterable = TRUE,
+  pagination = FALSE,
+  highlight = TRUE,
+  striped = TRUE,
+  borderless = TRUE,
+  resizable = TRUE,
+  rownames = TRUE,
+  columns = columns
+)
+```
+   
+

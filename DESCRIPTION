@@ -1,0 +1,37 @@
+Package: hapiviz
+Type: Package
+Title: Visualisation functions for the hapiverse
+Version: 0.1.0
+Authors@R: c(
+    person(given = "Ramiro", family = "Magno",
+      email = "ramiro.magno@gmail.com",
+      role = c("aut", "cre"),
+      comment = c(ORCID = "0000-0001-5226-3441")),
+    person(given = "Isabel", family = "Duarte",
+      email = "iduarte.scientist@gmail.com",
+      role = "aut",
+      comment = c(ORCID = "0000-0003-0060-2936")),
+    person(given = "Ana-Teresa", family = "Maia",
+      email = "maia.anateresa@gmail.com", role = "aut", 
+      comment = c(ORCID = "0000-0002-0454-9207")),
+    person("Centre for Biomedical Research, University of Algarve",
+    role = c("cph", "fnd"))
+    )
+Description: This package provides functions for easy
+    visualisation of data retrieved with the REST API
+    clients that comprise the hapiverse: gwasrapidd and
+    quincunx.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    ggplot2,
+    gwasrapidd (>= 0.99.11),
+    quincunx (>= 0.1.0),
+    rmarkdown,
+    rstudioapi
+Remotes: 
+    maialab/quincunx,
+    maialab/gwasrapidd
