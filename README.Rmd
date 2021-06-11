@@ -36,7 +36,7 @@ remotes::install_github("maialab/hapiviz")
 
 Making a forest plot of performance metrics effect sizes:
 
-```{r cache=TRUE}
+```{r}
 library(quincunx)
 library(hapiviz)
 
