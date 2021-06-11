@@ -27,11 +27,18 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
     dplyr,
+    forcats,
     ggplot2,
+    glue,
     gwasrapidd (>= 0.99.11),
+    htmltools,
+    magrittr,
     quincunx (>= 0.1.0),
+    rlang,
     rmarkdown,
-    rstudioapi
+    rstudioapi,
+    stringr,
+    tibble
 Remotes: 
     maialab/quincunx,
     maialab/gwasrapidd

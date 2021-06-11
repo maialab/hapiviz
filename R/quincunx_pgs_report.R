@@ -1,3 +1,10 @@
+#' Make a PGS Report
+#'
+#' Makes a PGS report.
+#'
+#' @param scores_obj A PGS scores object.
+#' @param file A file path to be used for saving the report.
+#'
 #' @export
 quincunx_pgs_report <- function(scores_obj, file = basename(tempfile(pattern = 'pgs_report_', fileext = '.html'))) {
 
@@ -12,6 +19,6 @@ quincunx_pgs_report <- function(scores_obj, file = basename(tempfile(pattern = '
   if (rstudioapi::hasFun("viewer") && file.copy(report, tmp_report, overwrite = TRUE)) {
     rstudioapi::callFun("viewer", tmp_report)
   } else {
-    browseURL(report)
+    utils::browseURL(report)
   }
 }

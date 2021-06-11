@@ -1,12 +1,13 @@
+#' @importFrom rlang .data
 collapse_traits <- function(traits_tbl) {
   traits_tbl %>%
-    dplyr::group_by(pgs_id) %>%
+    dplyr::group_by(.data$pgs_id) %>%
     dplyr::mutate(mapped_traits = glue::glue('{trait} ({efo_id})')) %>%
     #dplyr::summarise(mapped_traits = paste(mapped_traits, collapse = '|')) %>%
-    dplyr::mutate(trait = paste(mapped_traits, collapse = '|')) %>%
+    dplyr::mutate(trait = paste(.data$mapped_traits, collapse = '|')) %>%
     dplyr::ungroup() %>%
-    dplyr::select(-mapped_traits) %>%
-    dplyr::distinct(pgs_id, .keep_all = TRUE)
+    dplyr::select(-.data$mapped_traits) %>%
+    dplyr::distinct(.data$pgs_id, .keep_all = TRUE)
 }
 
 extract_efo_ids <- function(string) {

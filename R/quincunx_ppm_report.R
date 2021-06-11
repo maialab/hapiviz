@@ -12,6 +12,6 @@ quincunx_ppm_report <- function(ppm_obj, file) {
   if (rstudioapi::hasFun("viewer") && file.copy(report, tmp_report, overwrite = TRUE)) {
     rstudioapi::callFun("viewer", tmp_report)
   } else {
-    browseURL(report)
+    utils::browseURL(report)
   }
 }

@@ -1,24 +1,32 @@
+#' Make a forest plot
+#'
+#' Makes a forest plot.
+#'
+#' @param tbl A tibble.
+#' @param group_by_type Whether to group by effect size type.
+#'
+#' @importFrom rlang .data
 #' @export
 forest_plot <- function(tbl, group_by_type = TRUE) {
 
   if (group_by_type) {
     tbl <- tbl %>%
-      dplyr::mutate(ppm_label = paste(ppm_id, estimate_type, sep = '-')) %>%
-      dplyr::arrange(dplyr::desc(estimate_type_long), dplyr::desc(interval_lower)) %>%
+      dplyr::mutate(ppm_label = paste(.data$ppm_id, .data$estimate_type, sep = '-')) %>%
+      dplyr::arrange(dplyr::desc(.data$estimate_type_long), dplyr::desc(.data$interval_lower)) %>%
       tibble::rowid_to_column('id') %>%
-      dplyr::mutate(ppm_label = forcats::fct_reorder(ppm_label, id))
+      dplyr::mutate(ppm_label = forcats::fct_reorder(.data$ppm_label, .data$id))
   } else {
     tbl <- tbl %>%
-      dplyr::mutate(ppm_label = paste(ppm_id, estimate_type, sep = '-'))
+      dplyr::mutate(ppm_label = paste(.data$ppm_id, .data$estimate_type, sep = '-'))
   }
 
   ggplot2::ggplot(data = tbl,
                   ggplot2::aes(
-                    x = ppm_label,
-                    y = estimate,
-                    ymin = interval_lower,
-                    ymax = interval_upper,
-                    col = estimate_type_long
+                    x = .data$ppm_label,
+                    y = .data$estimate,
+                    ymin = .data$interval_lower,
+                    ymax = .data$interval_upper,
+                    col = .data$estimate_type_long
                   )) +
     ggplot2::geom_point(size = 2) +
     ggplot2::geom_errorbar(width = 0) +

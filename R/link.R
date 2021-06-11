@@ -1,4 +1,3 @@
-#' @export
 hl <- function(url_pattern = NULL) {
   function(value, index = NULL, colname = NULL) {
     url <- glue::glue(url_pattern)
