@@ -1,5 +1,5 @@
 #' @export
-quincunx_pgs_report <- function(scores_obj, file) {
+quincunx_pgs_report <- function(scores_obj, file = basename(tempfile(pattern = 'pgs_report_', fileext = '.html'))) {
 
   template <- system.file('templates', 'quincunx_pgs_report.Rmd', package = 'hapiviz')
   report <- rmarkdown::render(template, params = list(pgs = scores_obj), output_file = file, quiet = TRUE)

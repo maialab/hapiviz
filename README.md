@@ -18,7 +18,9 @@ with the REST API clients that comprise the hapiverse:
 remotes::install_github("maialab/hapiviz")
 ```
 
-## Example
+## Examples
+
+### Forest plot
 
 Making a forest plot of performance metrics effect sizes:
 
@@ -31,3 +33,22 @@ forest_plot(ppms@pgs_effect_sizes)
 ```
 
 <img src="man/figures/README-unnamed-chunk-2-1.png" width="100%" />
+
+### Summary report for scores objects
+
+Creating a summarising report for a `scores` object with
+`quincunx_pgs_report()`:
+
+``` r
+library(quincunx)
+library(hapiviz)
+
+# Get the polygenic scores associated with pubmed id 30554720
+mavaddat_scores <- get_scores(pubmed_id = '30554720')
+
+# This will show a html table of scores in the Viewer pane of RStudio.
+# Use the `file` argument if you want to save the output to an html file.
+quincunx_pgs_report(mavaddat_scores)
+```
+
+<img src='man/figures/README-pgs_report_snap.png' align="center"/>
