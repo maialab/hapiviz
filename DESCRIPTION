@@ -41,4 +41,4 @@ Imports:
     tibble
 Remotes: 
     maialab/quincunx,
-    maialab/gwasrapidd
+    ramiromagno/gwasrapidd
